@@ -1,6 +1,9 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var score = document.getElementById("scoreSpan");
+var firstplace = document.getElementById("firstplace");
+var scondplace = document.getElementById("secondplace");
+var thirdplace = document.getElementById("thirdplace");
 
 const scale = 10;
 let head = {
@@ -17,6 +20,10 @@ const column = canvas.width / scale;
 let snake = [head];
 let total = 0;
 let going ='';
+let on = 0;
+let two = 0;
+let three = 0;
+
 
 
 function scene(){
@@ -138,6 +145,7 @@ function eat(){
         total++;
         addPart();
         fruitLocation();
+        score.innerText = total;
         console.log(total);
         return true
     }
@@ -153,7 +161,8 @@ function addPart (){
 
 function checkCollision(){
     for (var i =1; i < snake.length; i++ ){
-        if(snake[0].x === snake[i].x && snake[0].y === snake[i].y){
+        if(snake[0].x === snake[i].x && snake[0].y === snake[i].y){ 
+            checkScore(total); 
            console.log('U DEad')
             total = 0;
             snake = [head];
@@ -161,7 +170,28 @@ function checkCollision(){
             snake[0].y = 0;
            xSpeed = 0;
             ySpeed = 0;
-            
+             
            }
+    }
+}
+
+function checkScore(total){
+    if(total > firstplace.innerText){
+        localStorage.setItem("firstplace", total);
+        console.log(firstplace.innerText);
+        firstplace.innerText = total;
+        return
+    }
+    if(total > secondplace.innerText){
+        localStorage.setItem("secondplace", total);
+        console.log(secondplace.innerText);
+        secondplace.innerText= total;
+        return
+    }
+    if(total > thirdplace.innerText){
+        localStorage.setItem("thirdplace", total);
+        console.log(thirdplace.innerText);
+        thirdplace.innerText = total;
+        return
     }
 }
